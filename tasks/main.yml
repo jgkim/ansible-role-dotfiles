@@ -1,29 +1,35 @@
 ---
-- name: Ensure dotfiles repository is cloned locally.
+- name: Ensure the dotfiles repository is cloned locally.
   git:
-    repo: "{{ dotfiles_repo }}"
-    dest: "{{ dotfiles_repo_local_destination }}"
+    repo: "{{ dotfiles_remote }}"
+    dest: "{{ dotfiles_local }}"
   sudo: no
 
-- name: Ensure all configured dotfiles are links.
-  shell: "ls -F {{ dotfiles_home }}/{{ item }}"
-  register: existing_dotfile_info
-  failed_when: false
+- name: Find all dotfiles to link.
+  command: find {{ dotfiles_local }} -name ".*" -exec basename \{} \;
+  register: dotfiles
   always_run: yes
-  changed_when: false
-  with_items: dotfiles_files
+  changed_when: False
 
-- name: Remove existing dotfiles file if a replacement is being linked.
+- name: Ensure all dotfiles except ignored ones are links.
+  command: ls -F {{ dotfiles_home }}/{{ item }}
+  register: existing_dotfiles
+  with_items: dotfiles.stdout_lines
+  always_run: yes
+  failed_when: False
+  changed_when: False
+
+- name: Remove the existing dotfile if a replacement is being linked.
   file:
-    path: "{{ dotfiles_home }}/{{ dotfiles_files[item.0] }}"
+    path: "{{ dotfiles_home }}/{{ dotfiles.stdout_lines[item.0] }}"
     state: absent
   when: "'@' not in item.1.stdout"
-  with_indexed_items: existing_dotfile_info.results
+  with_indexed_items: existing_dotfiles.results
 
-- name: Link dotfiles into home folder.
+- name: Link dotfiles into the home folder.
   file:
-    src: "{{ dotfiles_repo_local_destination }}/{{ item }}"
+    src: "{{ dotfiles_local }}/{{ item }}"
     dest: "{{ dotfiles_home }}/{{ item }}"
     state: link
+  with_items: dotfiles.stdout_lines
   sudo: no
-  with_items: dotfiles_files
