@@ -1,6 +1,8 @@
 dotfiles
 ========
 
+[![Build Status](http://img.shields.io/travis/jgkim/ansible-role-dotfiles.svg?style=flat)](https://travis-ci.org/jgkim/ansible-role-dotfiles)
+
 This role installs a set of dotfiles from a given git repository. By default, it will install my dotfiles, but you can use any set of dotfiles you'd like, as long as they follow a conventional format.
 
 
