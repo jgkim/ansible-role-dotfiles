@@ -2,6 +2,7 @@ dotfiles
 ========
 
 [![Build Status](http://img.shields.io/travis/jgkim/ansible-role-dotfiles.svg?style=flat)](https://travis-ci.org/jgkim/ansible-role-dotfiles)
+[![Ansible Galaxy](http://img.shields.io/ansible/role/5858.svg?style=flat)](https://galaxy.ansible.com/detail#/role/5858)
 
 This role installs a set of dotfiles from a given git repository. By default, it will install my dotfiles, but you can use any set of dotfiles you'd like, as long as they follow a conventional format.
 
@@ -39,6 +40,7 @@ The home directory where dotfiles will be linked. Generally, the default should 
 dotfiles_ignore:
   - .DS_Store
   - .git
+  - .ansible
 ```
 
 Which files from the dotfiles repository should be ignored when linking to the dotfiles_home.
