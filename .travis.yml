@@ -4,16 +4,15 @@ python: "2.7"
 
 sudo: false
 
-before_install:
-  # Create Workspace folder
-  - mkdir ~/Workspace/
-
 install:
   # Install Ansible.
   - pip install ansible
 
   # Add ansible.cfg to pick up roles path.
   - "{ echo '[defaults]'; echo 'roles_path = ../'; } >> ansible.cfg"
+
+  # Create Workspace folder
+  - mkdir ~/Workspace/
 
 script:
   # Check the role/playbook's syntax.
