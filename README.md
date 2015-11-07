@@ -1,5 +1,5 @@
-dotfiles
-========
+Ansible Role: dotfiles
+======================
 
 [![Build Status](http://img.shields.io/travis/jgkim/ansible-role-dotfiles.svg?style=flat)](https://travis-ci.org/jgkim/ansible-role-dotfiles)
 [![Ansible Galaxy](http://img.shields.io/ansible/role/5858.svg?style=flat)](https://galaxy.ansible.com/detail#/role/5858)
