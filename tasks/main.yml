@@ -3,6 +3,14 @@
   git:
     repo: "{{ dotfiles_remote }}"
     dest: "{{ dotfiles_local }}"
+    update: no
+
+- name: Ensure the local repository is up-to-date.
+  command: git pull origin master chdir={{ dotfiles_local }}
+  args:
+    warn: no
+  register: return_value
+  changed_when: "return_value.stdout.find('up-to-date') == -1"
 
 - name: Find all dotfiles to link.
   command: find {{ dotfiles_local }} -maxdepth 1 -name ".*" -exec basename \{} \;
