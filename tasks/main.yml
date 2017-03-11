@@ -15,7 +15,7 @@
 - name: Find all dotfiles to link.
   command: find {{ dotfiles_local }} -maxdepth 1 -name ".*" -exec basename \{} \;
   register: dotfiles
-  always_run: yes
+  check_mode: no
   changed_when: False
 
 - name: Ensure all dotfiles except ignored ones are links.
@@ -23,7 +23,7 @@
   register: existing_dotfiles
   with_items: "{{ dotfiles.stdout_lines }}"
   when: "item not in dotfiles_ignore"
-  always_run: yes
+  check_mode: no
   failed_when: False
   changed_when: False
 
